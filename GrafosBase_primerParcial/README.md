@@ -16,7 +16,7 @@ La clase se encuentra escrita sobre Java 11, para poder ejecutar el codigo, se e
 Donde se encuentran los ejemplos respectivos, ademas de algunos otros ejemplos: 
 #### Explicacion de Atributos: 
 - \- matrix: int[][]: representa las aristas dirigidas entre los vertices, es una matriz nxn
-- \- pesoAristas: HashMap<Integer, ArrayList<Peso>>: almacena el peso de las aristas.
+- \- pesoAristas: HashMap<Integer, ArrayList\<Peso>>: almacena el peso de las aristas.
 ##### Clase: Peso
 Clase que representa el peso de una arista, entre 2 vertices.
 #### Explicacion de Metodos: 

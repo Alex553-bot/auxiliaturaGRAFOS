@@ -72,7 +72,7 @@ public class MatrizAdyacencia {
             if (((i != j) || dirigido)) {
                 matrix[i][j]++;
                 if (!dirigido) {
-                    matrix[j][i]++;
+                    insertarArista(j, i, true);
                 }
             } else {
                 insertarArista(i, j, true);
@@ -84,7 +84,6 @@ public class MatrizAdyacencia {
         if (pesoAristas != null && ((i != j) || dirigido)) {
             matrix[i][j]++;
             Peso p = new Peso(i, j, peso);
-            matrix[i][j]++;
             ArrayList<Peso> lista = pesoAristas.get(i);
             if (lista == null) {
                 lista = new ArrayList<>();
