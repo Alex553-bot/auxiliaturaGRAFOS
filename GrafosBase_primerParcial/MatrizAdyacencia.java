@@ -1,10 +1,6 @@
 import java.util.HashMap;
 import java.util.ArrayList;
 
-/**
- * IMPORTANTE: mejorar nombres de todos los metodos!!
- */
-
 public class MatrizAdyacencia {
     private int matrix[][];
     private HashMap<Integer, ArrayList<Peso>> pesoAristas;
@@ -16,9 +12,12 @@ public class MatrizAdyacencia {
         }
     }
 
-    public MatrizAdyacencia() {
-        // en este constructor debemos poder admitir alguna entrada para poder convertir
-        // a un objeto de MatrizAdyacencia
+    public MatrizAdyacencia(int[][] matriz) throws Exception {
+        if (matriz.length == matriz[0].length) {
+            matrix = matriz;
+        } else {
+            throw new Exception("error matriz no valida, debe ser cuadrada");
+        }
     }
 
     public int getNumVertices() {
@@ -32,18 +31,38 @@ public class MatrizAdyacencia {
                 numAristas += matrix[i][j];
             }
         }
-        return (numAristas / 2);
+        // hace referencia al numero de aristas DIRIGIDAS.
+        return (numAristas);
+    }
+
+    public int getNroAristasNoDirigidos() {
+        int numAristas = getNumAristas();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = i + 1; j < matrix.length; j++) {
+                if ((matrix[i][j] > 0) && (matrix[j][i] > 0)) {
+                    numAristas -= Math.min(matrix[i][j], matrix[j][i]);
+                }
+            }
+        }
+        return numAristas;
     }
 
     public boolean existeArista(int origen, int destino) {
         return (matrix[origen][destino] > 0);
     }
 
-    // verificar?
     public double getPesoArista(int i, int j) {
         double peso = 0;
         if (pesoAristas != null) {
-
+            ArrayList<Peso> pesos = pesoAristas.get(i);
+            boolean bandera = (pesos != null);
+            for (int k = 0; k < pesos.size() && bandera; k++) {
+                Peso p = pesos.get(k);
+                bandera = (p.getVertice2() == j);
+                if (bandera) {
+                    peso = p.getPeso();
+                }
+            }
         }
         return peso;
     }
@@ -61,9 +80,6 @@ public class MatrizAdyacencia {
         }
     }
 
-    // Un grafo ponderado, pesado o con costos es un grafo donde cada arista tiene
-    // asociado un
-    // valor o etiqueta, para representar el costo, peso, longitud, etc
     public void insertarArista(int i, int j, boolean dirigido, double peso) {
         if (pesoAristas != null && ((i != j) || dirigido)) {
             matrix[i][j]++;
@@ -91,8 +107,10 @@ public class MatrizAdyacencia {
         auxiliar--;
         for (int i = 0; i < matrix.length; i++) {
             if (matrix[vertice][i] > 0) {
-                adyacentes[auxiliar] = i;
-                auxiliar--;
+                for (int j=0; j<matrix[vertice][i]; j++) {
+                    adyacentes[auxiliar] = i;
+                    auxiliar--;
+                }
             }
         }
 
@@ -161,7 +179,16 @@ public class MatrizAdyacencia {
         boolean respuesta = ((matrix[origen][destino] > 0) && (pesoAristas != null));
 
         if (respuesta) {
-
+            ArrayList<Peso> pesos = pesoAristas.get(origen);
+            for (Peso p : pesos) {
+                if (p.getPeso() == peso) {
+                    matrix[origen][destino]--;
+                    pesos.remove(p);
+                }
+            }
+            if (!dirigido) {
+                quitarArista(destino, origen, true);
+            }
         }
 
         return respuesta;
@@ -191,62 +218,11 @@ public class MatrizAdyacencia {
     }
 
     public boolean esGrafoCiclo() {
-        // cada vertice debe tener como maximo 2 aristas, y que podamos armar los
-        // vertices.
-        int[] ciclo = new int[matrix.length + 1];
-        int pos = 0;
-        int i, j;
-        i = 0;
-        // ciclo para representar celda vacia
-        for (int k = 0; k < ciclo.length; k++) {
-            ciclo[k] = -1;
-        }
-        for (j = 0; j < matrix.length; j++) {
-            if (matrix[i][j] > 0) {
-                calcularGrafoCiclo(ciclo, i, j, pos, 2);
-                j = matrix.length;
-            }
-        }
-
-        for (i = 0; i < ciclo.length; i++) {
-            System.out.print(ciclo[i]);
-        }
-        return ciclo[ciclo.length - 1] != -1;
-    }
-
-    private void calcularGrafoCiclo(int[] ciclo, int i, int j, int pos, int nroA) {
-        boolean respuesta = (pos < matrix.length && ciclo[ciclo.length - 2] == -1);
-
-        i = 0;
-        while (respuesta && (i < pos)) {
-            respuesta = (ciclo[i] != j);
-            i++;
-        }
-        respuesta = respuesta && (calcularOrdenVertice(j) <= nroA);
-
-        if (respuesta) {
-            ciclo[pos] = j;
-            for (i = 0; i < matrix.length; i++) {
-                if (matrix[j][i] > 0) {
-                    calcularGrafoCiclo(ciclo, j, i, pos + 1, nroA);
-                }
-            }
-
-            respuesta = (ciclo[ciclo.length - 1] == -1) && (pos == matrix.length - 1);
-            respuesta = respuesta && (matrix[j][ciclo[0]] == 1);
-            if (respuesta) {
-                ciclo[pos + 1] = ciclo[0];
-            }
-        }
-    }
-
-    public boolean esCiclo2() {
         boolean[] ciclo = new boolean[matrix.length];
-        return calcularGrafoCiclo2(ciclo, 2, 0);
+        return calcularGrafoCiclo(ciclo, 2, 0);
     }
 
-    // k -> hace referencia en que vertice vamos a iniciar, para no usarlo usar -1
-    public boolean calcularGrafoCiclo2(boolean[] ciclo, int nroA, int k) {
+    private boolean calcularGrafoCiclo(boolean[] ciclo, int nroA, int k) {
         boolean esCiclo = (matrix.length > 2);
         int n = matrix.length;
         int aux = k;
@@ -273,10 +249,6 @@ public class MatrizAdyacencia {
             }
         }
         return esCiclo;
-    }
-
-    public boolean esGrafoRueda2() {
-        return false;
     }
 
     public boolean esGrafoRueda() {
@@ -320,26 +292,25 @@ public class MatrizAdyacencia {
                 while (auxiliar == (i - 1)) {
                     auxiliar = (int) (Math.random() * (n - 1));
                 }
-                respuesta = calcularGrafoCiclo2(ciclo, 3, auxiliar);
+                respuesta = calcularGrafoCiclo(ciclo, 3, auxiliar);
             }
-
         }
 
         return respuesta;
     }
 
-    public boolean existeBucle() {
-        boolean respuesta = false;
-
-        int i = 0;
-        while (!respuesta && (i < matrix.length)) {
-            respuesta = (matrix[i][i] > 0);
-            i++;
-        }
-
-        return respuesta;
-    }
-
+    //public boolean existeBucle() {
+    //    boolean respuesta = false;
+//
+    //    int i = 0;
+    //    while (!respuesta && (i < matrix.length)) {
+    //        respuesta = (matrix[i][i] > 0);
+    //        i++;
+    //    }
+//
+    //    return respuesta;
+    //}
+//
     public int calcularOrdenVertice(int vertice) {
         int resultado = 0;
         for (int i = 0; i < matrix.length; i++) {

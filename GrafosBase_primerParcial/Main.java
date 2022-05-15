@@ -33,8 +33,8 @@ public class Main {
         //matriz.insertarArista(0, 0, true, 2);
         
 
-        System.out.println(matriz.esCiclo2());
-        //System.out.println(matriz.esCompleto());
+        System.out.println(matriz.esGrafoCiclo());
+        System.out.println(matriz.esCompleto());
         System.out.println(matriz.esGrafoRueda());
         matriz.dibujarGrafo();
     }
