@@ -40,7 +40,7 @@ public class MatrizAdyacencia {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = i + 1; j < matrix.length; j++) {
                 if ((matrix[i][j] > 0) && (matrix[j][i] > 0)) {
-                    numAristas -= Math.min(matrix[i][j], matrix[j][i]);
+                    numAristas = numAristas -  Math.min(matrix[i][j], matrix[j][i]);
                 }
             }
         }

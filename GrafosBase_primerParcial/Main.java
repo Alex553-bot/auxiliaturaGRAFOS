@@ -52,7 +52,7 @@ public class Main {
         grafo2.dibujarGrafo();
         System.out.println("Numero de aristas dirigidas: " + grafo2.getNumAristas());
         System.out.println("Numero de vertices: " + grafo2.getNumVertices());
-        System.out.println("Numero de aristas no dirigidos: "+ grafo1.getNroAristasNoDirigidos());
+        System.out.println("Numero de aristas no dirigidos: "+ grafo2.getNroAristasNoDirigidos());
         System.out.println("Es grafo completo: " + grafo2.esCompleto());
         System.out.println("Es grafo ciclo: " + grafo2.esGrafoCiclo());
         System.out.println("Es grafo rueda: " + grafo2.esGrafoRueda());
@@ -61,10 +61,9 @@ public class Main {
         grafo3.dibujarGrafo();
         System.out.println("Numero de aristas dirigidas: " + grafo3.getNumAristas());
         System.out.println("Numero de vertices: " + grafo3.getNumVertices());
-        System.out.println("Numero de aristas no dirigidos: "+ grafo1.getNroAristasNoDirigidos());
+        System.out.println("Numero de aristas no dirigidos: "+ grafo3.getNroAristasNoDirigidos());
         System.out.println("Es grafo completo: " + grafo3.esCompleto());
         System.out.println("Es grafo ciclo: " + grafo3.esGrafoCiclo());
         System.out.println("Es grafo rueda: " + grafo3.esGrafoRueda());
-
     }
 }
