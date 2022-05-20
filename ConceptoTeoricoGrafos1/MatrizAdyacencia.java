@@ -352,43 +352,42 @@ public class MatrizAdyacencia {
     public int calcularNumeroCromatico(int pos) {
         int resultado = 0;
         int n = matrix.length;
-        if (n % 2 == 0) {
-            int[] visitados = new int[n];
+        int[] visitados = new int[n];
 
-            for (int i = 0; i < n; i++) {
-                visitados[i] = -1;
-            }
-
-            LinkedList<Integer> cola = new LinkedList<>();
-
-            cola.add(pos);
-
-            while (!cola.isEmpty()) {
-                int actual = cola.poll();
-
-                boolean auxiliar = true;
-                int i;
-
-                for (i = 0; (i < n) && auxiliar; i++) {
-                    if ((matrix[actual][i] > 0) && (visitados[i] == -1)) {
-                        cola.add(i);
-                    }
-                }
-
-                for (i = 0; (i < resultado) && auxiliar; i++) {
-                    for (int j = 0; j < n; j++) {
-                        auxiliar = false;
-                        if (matrix[actual][j] > 0) {
-                            auxiliar |= visitados[j] == i;
-                        }
-                    }
-                }
-                if (i == resultado) {
-                    resultado++;
-                }
-                visitados[actual] = i;
-            }
+        for (int i = 0; i < n; i++) {
+            visitados[i] = -1;
         }
+
+        LinkedList<Integer> cola = new LinkedList<>();
+
+        cola.add(pos);
+
+        while (!cola.isEmpty()) {
+            int actual = cola.poll();
+
+            boolean auxiliar = true;
+            int i;
+
+            for (i = 0; (i < n) && auxiliar; i++) {
+                if ((matrix[actual][i] > 0) && (visitados[i] == -1)) {
+                    cola.add(i);
+                }
+            }
+
+            for (i = 0; (i < resultado) && auxiliar; i++) {
+                for (int j = 0; j < n; j++) {
+                    auxiliar = false;
+                    if (matrix[actual][j] > 0) {
+                        auxiliar |= visitados[j] == i;
+                    }
+                }
+            }
+            if (i == resultado) {
+                resultado++;
+            }
+            visitados[actual] = i;
+        }
+
         return resultado;
     }
 }

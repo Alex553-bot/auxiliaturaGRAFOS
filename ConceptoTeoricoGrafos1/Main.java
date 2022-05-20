@@ -2,8 +2,6 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // MatrizAdyacencia matriz = new MatrizAdyacencia(2, false);
-        // System.out.println((matriz.valorarTipoEmparejamiento()));
         // MatrizAdyacencia grafo2 = new MatrizAdyacencia(4, false);
         // grafo2.insertarArista(0, 1, false);
         // grafo2.insertarArista(1, 2, false);
@@ -11,7 +9,6 @@ public class Main {
         // grafo2.insertarArista(0, 3, false);
         // grafo2.insertarArista(1, 3, false);
         // grafo2.insertarArista(2, 3, false);
-        Main main = new Main();
         MatrizAdyacencia matriz1 = new MatrizAdyacencia(4, false);
         // matriz1.insertarArista(0, 1, false);
         // matriz1.insertarArista(1, 2, false);
@@ -43,34 +40,32 @@ public class Main {
         grafo1.insertarArista(1, 4, false);
         // grafo1.insertarArista(3, 4, false);
 
-        MatrizAdyacencia grafo1Isomorfo = new MatrizAdyacencia(8, false);
-        grafo1Isomorfo.insertarArista(0, 1, false);
-        grafo1Isomorfo.insertarArista(1, 2, false);
-        grafo1Isomorfo.insertarArista(2, 3, false);
-        grafo1Isomorfo.insertarArista(3, 4, false);
-        grafo1Isomorfo.insertarArista(4, 5, false);
-        grafo1Isomorfo.insertarArista(5, 6, false);
-        grafo1Isomorfo.insertarArista(6, 7, false);
-        grafo1Isomorfo.insertarArista(7, 0, false);
+        grafo1 = new MatrizAdyacencia(8, false);
+        grafo1.insertarArista(0, 1, false);
+        grafo1.insertarArista(1, 2, false);
+        grafo1.insertarArista(2, 3, false);
+        grafo1.insertarArista(3, 4, false);
+        grafo1.insertarArista(4, 5, false);
+        grafo1.insertarArista(5, 6, false);
+        grafo1.insertarArista(6, 7, false);
+        grafo1.insertarArista(7, 0, false);
 
-        MatrizAdyacencia grafo2Isomorfo = new MatrizAdyacencia(7, false);
-        grafo2Isomorfo.insertarArista(0, 3, false);
-        grafo2Isomorfo.insertarArista(3, 6, false);
-        grafo2Isomorfo.insertarArista(6, 2, false);
-        grafo2Isomorfo.insertarArista(2, 5, false);
-        grafo2Isomorfo.insertarArista(5, 1, false);
-        grafo2Isomorfo.insertarArista(1, 4, false);
-        grafo2Isomorfo.insertarArista(4, 0, false);
+        MatrizAdyacencia grafo2 = new MatrizAdyacencia(7, false);
+        grafo2.insertarArista(0, 3, false);
+        grafo2.insertarArista(3, 6, false);
+        grafo2.insertarArista(6, 2, false);
+        grafo2.insertarArista(2, 5, false);
+        grafo2.insertarArista(5, 1, false);
+        grafo2.insertarArista(1, 4, false);
+        grafo2.insertarArista(4, 0, false);
 
-        //System.out.println("GRAFOS ISOMORFOS:");
-        //System.out.println("GRAFOS 1:");
-        //grafo1Isomorfo.dibujarGrafo();
-        //System.out.println("GRAFOS 2:");
-        //grafo2Isomorfo.dibujarGrafo();
-        //System.out.println("Son isomorfos: ");
-        //System.out.println(main.sonIsomorfos(grafo1Isomorfo, grafo2Isomorfo));
-
-        System.out.println(matriz2.calcularNumeroCromatico(0));
+        System.out.println("Numero cromatico del grafo: ");
+        grafo1.dibujarGrafo();
+        System.out.println(grafo1.calcularNumeroCromatico(0));
+    
+        System.out.println("Numero cromatico del grafo: ");
+        grafo2.dibujarGrafo();
+        System.out.println(grafo2.calcularNumeroCromatico(0));
     }
 
     //public ArrayList<Integer>[] representarListas(MatrizAdyacencia g) {
